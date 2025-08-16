@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Library Management System</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f4f8;
+            color: #ffffff;
+            height: 100vh;
+            background-image: url('https://static.vecteezy.com/system/resources/thumbnails/034/073/373/small_2x/a-bookshelf-with-many-books-ai-generated-photo.jpg');
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .container {
+            position: relative;
+            z-index: 1;
+            max-width: 1200px;
+            margin: auto;
+            padding: 2rem;
+        }
+
+        header {
+            background-color: rgba(26, 10, 9, 0.7);
+            color: white;
+            text-align: center;
+            padding: 1rem;
+            font-size: 2rem;
+            font-weight: bold;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        form input[type="text"] {
+            width: 100%;
+            padding: 0.8rem;
+            margin-bottom: 1rem;
+            border: 1px solid #ccc;
+            border-radius: 0.5rem;
+            font-size: 1rem;
+        }
+
+        button {
+            width: 100%;
+            background-color: rgba(26, 10, 9, 0.7);
+            color: white;
+            padding: 0.8rem;
+            font-size: 1rem;
+            border: none;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #000000;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 1rem;
+            margin: 0.5rem 0;
+            border-radius: 0.5rem;
+        }
+
+        li a {
+            text-decoration: none;
+            color: #e74c3c;
+            font-weight: bold;
+            margin-left: 1rem;
+        }
+
+        li a:hover {
+            text-decoration: underline;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 0.5rem;
+        }
+
+        .remove-button, .borrow-button, .return-button {
+            padding: 0.5rem 1rem;
+            font-size: 1rem;
+            text-decoration: none;
+            border-radius: 0.5rem;
+            color: white;
+            text-align: center;
+            transition: background-color 0.3s ease;
+        }
+
+        .remove-button {
+            background-color: #e74c3c;
+        }
+
+        .remove-button:hover {
+            background-color: #c0392b;
+        }
+
+        .borrow-button {
+            background-color: #27ae60;
+        }
+
+        .borrow-button:hover {
+            background-color: #2ecc71;
+        }
+
+        .return-button {
+            background-color: #f39c12;
+        }
+
+        .return-button:hover {
+            background-color: #f1c40f;
+        }
+
+        body::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: inherit;
+            background-size: cover;
+            background-position: center;
+            filter: blur(10px);
+            z-index: -1;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 2rem;
+        }
+
+        table th, table td {
+            padding: 1rem;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+
+        table th {
+            background-color: rgba(26, 10, 9, 0.7);
+            color: white;
+        }
+
+     
+        .popup {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .popup-content {
+            background-color: #fff;
+            padding: 2rem;
+            border-radius: 0.5rem;
+            text-align: center;
+            max-width: 500px;
+            width: 80%;
+        }
+
+        .popup-button {
+            padding: 0.8rem 2rem;
+            background-color: #27ae60;
+            color: white;
+            border: none;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .popup-button:hover {
+            background-color: #2ecc71;
+        }
+        .container {
+    overflow-y: auto;
+    max-height: 70vh;
+    scrollbar-width: thin;
+    scrollbar-color: #ccc transparent;
+}
+
+    </style>
+
+    <script>
+        function borrowBook(bookIndex) {
+            alert('Book borrowed successfully!');
+            const borrowButton = document.getElementById('borrow-' + bookIndex);
+            const returnButton = document.getElementById('return-' + bookIndex);
+            borrowButton.style.display = 'none';
+            returnButton.style.display = 'inline-block';
+        }
+
+        function returnBook(bookIndex) {
+            alert('Book returned successfully!');
+            const borrowButton = document.getElementById('borrow-' + bookIndex);
+            const returnButton = document.getElementById('return-' + bookIndex);
+            returnButton.style.display = 'none';
+            borrowButton.style.display = 'inline-block';
+        }
+        function searchBooks() {
+    const input = document.getElementById("searchInput");
+    const filter = input.value.toLowerCase();
+    const rows = document.querySelectorAll("tbody tr");
+
+    rows.forEach(row => {
+        const cells = row.getElementsByTagName("td");
+        let match = false;
+        for (let i = 0; i < cells.length - 1; i++) {
+            if (cells[i].textContent.toLowerCase().includes(filter)) {
+                match = true;
+                break;
+            }
+        }
+        row.style.display = match ? "" : "none";
+    });
+}
+    </script>
+</head>
+<body>
+    <header>
+        <h1>Library Management System</h1>
+    </header>
+
+    <div class="container">
+        <form method="POST" action="/add">
+            <input type="text" name="title" placeholder="Book Title" required>
+            <input type="text" name="author" placeholder="Author" required>
+            <input type="text" name="genre" placeholder="Genre" required>
+            <button type="submit">Add Book</button>
+        </form>
+        <input type="text" id="searchInput" placeholder="Search books..." style="width: 100%; padding: 0.8rem; margin-top: 2rem; margin-bottom: 1rem; border-radius: 0.5rem; border: 1px solid #ccc; font-size: 1rem;" onkeyup="searchBooks()">
+
+        <h2>Books in Library</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Author</th>
+                    <th>Genre</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for book in books %}
+                <tr>
+                    <td>{{ book.title }}</td>
+                    <td>{{ book.author }}</td>
+                    <td>{{ book.genre }}</td>
+                    <td class="action-buttons">
+                        {% if book.status == 'available' %}
+                            <a href="{{ url_for('borrow_book', index=loop.index0) }}" class="borrow-button">Borrow</a>
+                        {% else %}
+                            <a href="{{ url_for('return_book', index=loop.index0) }}" class="return-button">Return</a>
+                        {% endif %}
+                        <a href="{{ url_for('remove_book', index=loop.index0) }}" class="remove-button">Remove</a>
+                    </td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="4" style="text-align:center;">No books added yet.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+            
+        </table>
+    </div>
+</body>
+</html>

@@ -1,0 +1,1 @@
+[{"title": "The Alchemist", "author": "F.Scott Filzgerald", "genre": "Classic", "status": "available"}, {"title": "Geethanjali", "author": "Rabindranth Tagore", "genre": "Classic", "status": "available"}, {"title": "Sree Guru Charitra", "author": "Saraswati Gangadhar", "genre": "Holy", "status": "available"}]
